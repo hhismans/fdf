@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/23 13:29:38 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/24 12:49:30 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/24 18:35:04 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "fdf.h"
 #include <unistd.h>
 
-static void	case_horiz(t_env env, t_point p1, t_point p2, int color)
+static void	case_horiz(void *img_ptr, t_point p1, t_point p2, int color)
 {
 	int xi;
 	int yi;
@@ -34,7 +34,7 @@ static void	case_horiz(t_env env, t_point p1, t_point p2, int color)
 	e_corect = -1 * dx * 2;
 	while (xi <= p2.x)
 	{
-		mlx_image_pixel_put(env.mlx, env.win, xi, yi, color);
+		mlx_pixel_put_img(img_ptr, xi, yi, color);
 		e = e + coef;
 		if (e >= 0)
 		{
@@ -45,7 +45,7 @@ static void	case_horiz(t_env env, t_point p1, t_point p2, int color)
 	}
 }
 
-static void	case_horizneg(t_env env, t_point p1, t_point p2, int color)
+static void	case_horizneg(void *img_ptr, t_point p1, t_point p2, int color)
 {
 	int xi;
 	int yi;
@@ -64,7 +64,7 @@ static void	case_horizneg(t_env env, t_point p1, t_point p2, int color)
 	e_corect = -1 * dx * 2;
 	while (xi <= p2.x)
 	{
-		mlx_image_pixel_put(env.mlx, env.win, xi, yi, color);
+		mlx_pixel_put_img(img_ptr, xi, yi, color);
 		e = e + coef;
 		if (e >= 0)
 		{
@@ -75,7 +75,7 @@ static void	case_horizneg(t_env env, t_point p1, t_point p2, int color)
 	}
 }
 
-static void	case_verti(t_env env, t_point p1, t_point p2, int color)
+static void	case_verti(void *img_ptr, t_point p1, t_point p2, int color)
 {
 	int xi;
 	int yi;
@@ -94,7 +94,7 @@ static void	case_verti(t_env env, t_point p1, t_point p2, int color)
 	e_corect = -1 * dy * 2;
 	while (yi <= p2.y)
 	{
-		mlx_image_pixel_put(env.mlx, env.win, xi, yi, color);
+		mlx_pixel_put_img(img_ptr, xi, yi, color);
 		e = e + coef;
 		if (e >= 0)
 		{
@@ -105,7 +105,7 @@ static void	case_verti(t_env env, t_point p1, t_point p2, int color)
 	}
 }
 
-static void	case_vertineg(t_env env, t_point p1, t_point p2, int color)
+static void	case_vertineg(void *img_ptr, t_point p1, t_point p2, int color)
 {
 	int xi;
 	int yi;
@@ -126,7 +126,7 @@ static void	case_vertineg(t_env env, t_point p1, t_point p2, int color)
 	e_corect = dy * 2;
 	while (yi >= p2.y)
 	{
-		mlx_image_pixel_put(env.mlx, env.win, xi, yi, color);
+		mlx_pixel_put_img(img_ptr, xi, yi, color);
 		e = e + coef;
 		if (e >= 0)
 		{
@@ -137,7 +137,7 @@ static void	case_vertineg(t_env env, t_point p1, t_point p2, int color)
 	}
 }
 
-void	ft_drawline_img(t_env env, t_point p1, t_point p2, int color)
+void	ft_drawline_img(void *img_ptr, t_point p1, t_point p2, int color)
 {
 	int dx;
 	int dy;
@@ -153,22 +153,22 @@ void	ft_drawline_img(t_env env, t_point p1, t_point p2, int color)
 				{
 					if (dx > dy)
 					{
-						case_horiz(env, p1, p2, color);
+						case_horiz(img_ptr, p1, p2, color);
 					}
 					else
 					{
-						case_verti(env, p1, p2, color);
+						case_verti(img_ptr, p1, p2, color);
 					}
 				}
 				else
 				{
 					if (dx > -dy)
 					{
-						case_horizneg(env, p1, p2, color);
+						case_horizneg(img_ptr, p1, p2, color);
 					}
 					else
 					{
-						case_vertineg(env, p1, p2, color);
+						case_vertineg(img_ptr, p1, p2, color);
 					}
 				}
 			}
@@ -178,7 +178,7 @@ void	ft_drawline_img(t_env env, t_point p1, t_point p2, int color)
 				{
 					while (p1.x != p2.x)
 					{
-						mlx_image_pixel_put(env.mlx, env.win, p1.x, p2.y, color);
+						mlx_pixel_put_img(img_ptr, p1.x, p2.y, color);
 						p1.x++;
 					}
 				}
@@ -186,7 +186,7 @@ void	ft_drawline_img(t_env env, t_point p1, t_point p2, int color)
 				{
 					while (p1.x != p2.x)
 					{
-						mlx_image_pixel_put(env.mlx, env.win, p1.x, p2.y, color);
+						mlx_pixel_put_img(img_ptr, p1.x, p2.y, color);
 						p2.x++;
 					}
 				}
@@ -194,7 +194,7 @@ void	ft_drawline_img(t_env env, t_point p1, t_point p2, int color)
 		}
 		else
 		{
-			ft_drawline_img(env, p2, p1, color);
+			ft_drawline_img(img_ptr, p2, p1, color);
 		}
 	}
 	else
@@ -203,7 +203,7 @@ void	ft_drawline_img(t_env env, t_point p1, t_point p2, int color)
 		{
 			while (p1.y != p2.y)
 			{
-				mlx_image_pixel_put(env.mlx, env.win, p1.x, p1.y, color);
+				mlx_pixel_put_img(img_ptr, p1.x, p1.y, color);
 				p1.y++;
 			}
 		}
@@ -211,7 +211,7 @@ void	ft_drawline_img(t_env env, t_point p1, t_point p2, int color)
 		{
 			while (p1.y != p2.y)
 			{
-				mlx_image_pixel_put(env.mlx, env.win, p1.x, p2.y, color);
+				mlx_pixel_put_img(img_ptr, p1.x, p2.y, color);
 				p2.y++;
 			}
 		}
