@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/22 19:07:06 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/23 18:25:30 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/24 18:17:48 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,4 @@ typedef struct		s_point
 	int		y;
 }					t_point;
 void	ft_drawline(t_env env, t_point p1, t_point p2, int color);
+void	ft_drawline_img(void *img_ptr, t_point p1, t_point p2, int color);
