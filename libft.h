@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 13:32:34 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/14 05:46:09 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/26 18:42:19 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 # define LIBFT_H
 
+#define BUFF_SIZE 4096
 # include <string.h>
-
 typedef struct	s_list
 {
 	void			*content;
@@ -85,4 +85,5 @@ void			**ft_taballoc(size_t size);
 char			*ft_strndup(const char *s1, size_t n);
 char			*ft_strnjoin(char const *s1, char const *s2, size_t n);
 int				ft_strchri(char *str, int c);
+int				get_next_line(int const fd, char **line);
 #endif
