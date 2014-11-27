@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/23 13:29:38 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/24 18:35:04 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/27 17:12:21 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	ft_drawline_img(void *img_ptr, t_point p1, t_point p2, int color)
 {
 	int dx;
 	int dy;
-	t_point tmp;
+	//t_point tmp;
 
 	if ((dx = p2.x - p1.x) != 0)
 	{

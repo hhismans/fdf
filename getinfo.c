@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/24 11:58:03 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/27 00:58:44 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/27 17:41:34 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,42 +75,75 @@ int		**getinfo(char *file)
 	return(tab_int);
 }
 
-int		**convert_cavaliere(int **tab_int)
+t_point		**convert_axono(int **tab_int)
 {
-	int **tab_cav;
+	//int **tab_cav;
 	int size;
 	int i;
 	int j;
-	//t_point
+	t_point **point_cav;
 	size = 0;
 	while (tab_int[size])
 		size++;
 	i = 0;
 	j = 0;
-	tab_cav = (int **)ft_taballoc(sizeof(int) * (size + 1));
-	while (tab_int[j])
+	//tab_cav = (int **)ft_taballoc(sizeof(int) * (size + 1));
+	point_cav = (t_point **)ft_taballoc(sizeof(t_point *) * (size + 1));
+	while (tab_int[i])
 	{
-			ft_putendl("while EXTERNE");
-		tab_cav[j] = (int *)ft_memalloc(tab_int[j][0] + 1);
-		tab_cav[j][0] = tab_int[j][0];
-		i = 1;
-		while (i <= tab_int[j][0])
+		point_cav[i] = (t_point *)ft_memalloc(sizeof(t_point) * tab_int[i][0] + 1);
+		point_cav[i][0].x = tab_int[i][0];
+		j = 1;
+		while (j <= tab_int[i][0])
 		{
 			//ft_putendl("while interne");
-			tab_cav[j][i] = (i - 1) + (35 * tab_int[j][i]);
-			i++;
+			point_cav[i][j].x = (87 * (j - 1)) + (50 * i);
+			point_cav[i][j].y = (-17 * (j - 1)) - 30 * i + (94 * tab_int[i][j]) + 500;
+			j++;
 		}
-		j++;
+		i++;
 	}
-	return (tab_cav);
+	return (point_cav);
+}
+
+t_point		**convert_cavaliere(int **tab_int)
+{
+	//int **tab_cav;
+	int size;
+	int i;
+	int j;
+	t_point **point_cav;
+	size = 0;
+	while (tab_int[size])
+		size++;
+	i = 0;
+	j = 0;
+	//tab_cav = (int **)ft_taballoc(sizeof(int) * (size + 1));
+	point_cav = (t_point **)ft_taballoc(sizeof(t_point *) * (size + 1));
+	while (tab_int[i])
+	{
+		point_cav[i] = (t_point *)ft_memalloc(sizeof(t_point) * tab_int[i][0] + 1);
+		point_cav[i][0].x = tab_int[i][0];
+		j = 1;
+		while (j <= tab_int[i][0])
+		{
+			//ft_putendl("while interne");
+			point_cav[i][j].x = (10 * (j - 1)) + (35 * tab_int[i][j]);
+			point_cav[i][j].y = (10 * i) + (35 * tab_int[i][j]);
+			j++;
+		}
+		i++;
+	}
+	return (point_cav);
 }
 
 int		main(int argc, char **argv)
 {
 	int **tab;
-	int **tab_cav;
+	t_point **tab_cav;
 	int i;
 	int j;
+	t_env e;
 
 	j = 0;
 	i = 0;
@@ -129,20 +162,39 @@ int		main(int argc, char **argv)
 	}
 	i = 0;
 	j = 0;
-	ft_putendl("CONVERTI");
-	tab_cav = convert_cavaliere(tab);
-	ft_putendl("CONVERTI");
+	tab_cav = convert_axono(tab);
+	ft_putendl("CONVERTI X");
 	while (tab_cav[j])
 	{
 		i = 0;
-		while (i <= tab_cav[j][0])
+		while (i <= tab_cav[j][0].x)
 		{
-			ft_putnbr(tab_cav[j][i]);
+			ft_putnbr(tab_cav[j][i].x);
 			ft_putstr("\t");
 			i++;
 		}
 		ft_putendl("");
 		j++;
 	}
+	j = 0;
+	ft_putendl("CONVERTI y");
+	while (tab_cav[j])
+	{
+		i = 0;
+		while (i <= tab_cav[j][0].x)
+		{
+			ft_putnbr(tab_cav[j][i].y);
+			ft_putstr("\t");
+			i++;
+		}
+		ft_putendl("");
+		j++;
+	}
+	e.mlx = mlx_init();
+	e.win = mlx_new_window(e.mlx, 1000, 1000, "test fdf");
+	e.img = mlx_new_image(e.mlx, 1000, 1000);
+	draw_grid(e, tab_cav, BLUE);
+	mlx_put_image_to_window(e.mlx, e.win, e.img, 0, 0);
+	mlx_loop(e.mlx);
 	return (argc);
 }

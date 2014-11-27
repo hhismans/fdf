@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/24 13:48:33 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/24 19:33:16 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/27 17:15:53 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "fdf.h"
 #include <mlx.h>
 
-void	window_color(t_env e, void *img, int color, int x, int y)
+/*void	window_color(t_env e, void *img, int color, int x, int y)
 {
 	int i;
 	int bbp;
@@ -32,7 +32,7 @@ void	window_color(t_env e, void *img, int color, int x, int y)
 		data[i + 2] = mlx_get_color_value(e.mlx, color >> 16);
 		i = i + 4;
 	}
-}
+}*/
 
 void	mlx_pixel_put_img(void *img_ptr, int x, int y, int color)
 {
