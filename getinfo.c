@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/24 11:58:03 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/27 21:13:56 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/27 22:42:51 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		**getinfo(char *file)
 	return(tab_int);
 }
 
-t_point		**convert_axono(int **tab_int, int zoom, double alpha, double omega)
+t_point		**convert_axono(int **tab_int, int zoom, double alpha, double omega, int decal_x, int decal_y)
 {
 	//int **tab_cav;
 	int size;
@@ -99,8 +99,8 @@ t_point		**convert_axono(int **tab_int, int zoom, double alpha, double omega)
 		while (j <= tab_int[i][0])
 		{
 			//ft_putendl("while interne");
-			point_cav[i][j].x = ((((int)(cos(omega) * 100) * (j - 1)) - (((int)(100 * sin(omega)) * i)))) / zoom;
-			point_cav[i][j].y = ((((int)(100 * (sin(omega) * sin(alpha))) * (j - 1)) - (int)(100 * (cos(omega) * sin (alpha))) * i + ((int)(100 * cos(alpha)) * tab_int[i][j])) / zoom) + 500;
+			point_cav[i][j].x = ((((int)(cos(omega) * 100) * (j - 1)) - (((int)(100 * sin(omega)) * i)))) / zoom + decal_x;
+			point_cav[i][j].y = ((((int)(100 * (sin(omega) * sin(alpha))) * (j - 1)) - (int)(100 * (cos(omega) * sin (alpha))) * i + ((int)(100 * cos(alpha)) * tab_int[i][j])) / zoom) + decal_y;
 
 			//point_cav[i][j].x = (((87 * (j - 1)) + (50 * i))) / zoom;
 			//point_cav[i][j].y = (((-17 * (j - 1)) - 30 * i + (94 * tab_int[i][j])) / zoom) + 500;
@@ -149,7 +149,9 @@ int		key_hook(int keycode, t_env *e)
 	static int	zoom = 3;
 	int j = 0;
 	int i = 0;
-	static int color = GREEN;
+	static int	color = GREEN;
+	static int	decal_x = 0;
+	static int decal_y = 500;
 	t_point		**tab_conv;
 
 	if (keycode == RIGHT)
@@ -166,19 +168,27 @@ int		key_hook(int keycode, t_env *e)
 		color = RED;
 	if (keycode == G_KEY)
 		color = GREEN;
-	if (keycode == POS_KEY)
-		zoom++;
 	if (keycode == MINUS_KEY)
+		zoom++;
+	if (keycode == POS_KEY)
 		zoom--;
+	if (keycode == S_KEY)
+		decal_y += 10;
+	if (keycode == W_KEY)
+		decal_y -= 10;
+	if (keycode == D_KEY)
+		decal_x += 10;
+	if (keycode == A_KEY)
+		decal_x -= 10;
 	if (keycode == ESC_KEY)
 		exit(0);
 	ft_putstr("\nOMEGA = ");
 	ft_putnbr(omega);
 	ft_putstr("\nALPHA = ");
 	ft_putnbr(alpha);
-	tab_conv = convert_axono((*e).tab, zoom, alpha * M_PI / 180, omega * M_PI / 180);
+	tab_conv = convert_axono((*e).tab, zoom, alpha * M_PI / 180, omega * M_PI / 180, decal_x, decal_y);
 	mlx_destroy_image((*e).mlx, (*e).img);
-	(*e).img = mlx_new_image((*e).mlx, 1000, 1000);
+	(*e).img = mlx_new_image((*e).mlx, 1920, 1080);
 	draw_grid(*e, tab_conv, color);
 	//free(tab_conv);
 	mlx_put_image_to_window((*e).mlx, (*e).win, (*e).img, 0, 0);
@@ -214,7 +224,7 @@ int		main(int argc, char **argv)
 	}
 	i = 0;
 	j = 0;
-	tab_cav = convert_axono(e.tab, 3, 0 * M_PI / 180, 0 * M_PI / 180);
+	tab_cav = convert_axono(e.tab, 3, 0 * M_PI / 180, 0 * M_PI / 180, 0, 500);
 	//tab_cav = convert_cavaliere(tab);
 	ft_putendl("CONVERTI X");
 	while (tab_cav[j])
@@ -244,8 +254,8 @@ int		main(int argc, char **argv)
 		j++;
 	}
 	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, 1000, 1000, "test fdf");
-	e.img = mlx_new_image(e.mlx, 1000, 1000);
+	e.win = mlx_new_window(e.mlx, 1920, 1080, "test fdf");
+	e.img = mlx_new_image(e.mlx, 1920, 1080);
 	draw_grid(e, tab_cav, RED);
 	mlx_put_image_to_window(e.mlx, e.win, e.img, 0, 0);
 	mlx_key_hook(e.win, key_hook, &e);
