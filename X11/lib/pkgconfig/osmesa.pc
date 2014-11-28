@@ -1,0 +1,12 @@
+prefix=/opt/X11
+exec_prefix=${prefix}
+libdir=/opt/X11/lib
+includedir=/opt/X11/include
+
+Name: osmesa
+Description: Mesa Off-screen Rendering library
+Requires: 
+Version: 8.0.4
+Libs: -L${libdir} -lOSMesa
+Libs.private: 
+Cflags: -I${includedir}

@@ -1,0 +1,18 @@
+prefix=/opt/X11
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+sysconfdir=${prefix}/etc
+localstatedir=${prefix}/var
+PACKAGE=fontconfig
+confdir=@baseconfigdir@
+cachedir=/opt/X11/var/cache/fontconfig
+
+Name: Fontconfig
+Description: Font configuration and customization library
+Version: 2.11.0
+Requires:  freetype2
+Requires.private: 
+Libs: -L${libdir} -lfontconfig
+Libs.private: -lexpat -L/opt/X11/lib -lfreetype    
+Cflags: -I${includedir}  -I/opt/X11/include/freetype2 -I/opt/X11/include    
