@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/24 13:48:33 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/27 20:20:50 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/28 08:58:40 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	mlx_pixel_put_img(void *img_ptr, int x, int y, int color)
 	data = mlx_get_data_addr(img_ptr, &bbp, &sizeline, &endian);
 	bbp /=  8;
 	i = x * bbp + y * sizeline;
+	if (WIDTH * bbp + HEIGHT * sizeline < i)
+		return ;
 	if (x >= 0 && y >= 0)
 	{
 		data[i] = color;

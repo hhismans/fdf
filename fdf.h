@@ -6,12 +6,14 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/22 19:07:06 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/27 22:08:44 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/28 08:55:52 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 
+#define HEIGHT		1080
+#define WIDTH		1920
 #define BLUE		0x0000FF
 #define GREEN		0x00FF00
 #define RED			0xFF0000
@@ -35,20 +37,29 @@ typedef struct		s_point
 	int		y;
 }					t_point;
 
+typedef struct		s_color
+{
+	int color_begin;
+	int color_end;
+}					t_color;
+
 typedef struct		s_env
 {
 	void		*mlx;
 	void		*win;
 	void		*img;
 	void		*img2;
-	int		**tab;
+	int			**tab;
+	int			nbr_line;
 }					t_env;
 
 void		ft_drawline(t_env env, t_point p1, t_point p2, int color);
 void		ft_drawline_img(void *img_ptr, t_point p1, t_point p2, int color);
+void		ft_drawline_img_c(void *img_ptr, t_point p1, t_point p2, t_color c);
 int			**getinfo(char *file);
 t_point		**convert_cavaliere(int **tab_int);
 t_point		**convert_axono(int **tab_int, int zoom, double alpha, double omega, int decal_x, int decal_y);
 void		draw_grid(t_env e, t_point **tab, int color);
 void	mlx_pixel_put_img(void *img_ptr, int x, int y, int color);
 void	window_color(t_env e, void *img, int color, int x, int y);
+int		rainbow_gen(int x);

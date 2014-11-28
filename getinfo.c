@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/24 11:58:03 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/27 22:42:51 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/28 08:57:22 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_point		**convert_axono(int **tab_int, int zoom, double alpha, double omega, in
 		{
 			//ft_putendl("while interne");
 			point_cav[i][j].x = ((((int)(cos(omega) * 100) * (j - 1)) - (((int)(100 * sin(omega)) * i)))) / zoom + decal_x;
-			point_cav[i][j].y = ((((int)(100 * (sin(omega) * sin(alpha))) * (j - 1)) - (int)(100 * (cos(omega) * sin (alpha))) * i + ((int)(100 * cos(alpha)) * tab_int[i][j])) / zoom) + decal_y;
+			point_cav[i][j].y = ((((int)(100 * (sin(omega) * sin(alpha))) * (j - 1)) - (int)(100 * (cos(omega) * sin (alpha))) * i + ((int)(100 * cos(alpha)) * -tab_int[i][j] / 10)) / zoom) + decal_y;
 
 			//point_cav[i][j].x = (((87 * (j - 1)) + (50 * i))) / zoom;
 			//point_cav[i][j].y = (((-17 * (j - 1)) - 30 * i + (94 * tab_int[i][j])) / zoom) + 500;
@@ -188,7 +188,7 @@ int		key_hook(int keycode, t_env *e)
 	ft_putnbr(alpha);
 	tab_conv = convert_axono((*e).tab, zoom, alpha * M_PI / 180, omega * M_PI / 180, decal_x, decal_y);
 	mlx_destroy_image((*e).mlx, (*e).img);
-	(*e).img = mlx_new_image((*e).mlx, 1920, 1080);
+	(*e).img = mlx_new_image((*e).mlx, WIDTH, HEIGHT);
 	draw_grid(*e, tab_conv, color);
 	//free(tab_conv);
 	mlx_put_image_to_window((*e).mlx, (*e).win, (*e).img, 0, 0);
@@ -253,9 +253,48 @@ int		main(int argc, char **argv)
 		ft_putendl("");
 		j++;
 	}
+/*	t_env e;
+	t_color c;
+	t_point p1;
+	t_point p2;
+
+	p1.x = 500;
+	p1.y = 500;
+	p2.x = 250;
+	p2.y = 250;
+
+	c.color_begin = 0;
+	c.color_end = 1500;*/
 	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, 1920, 1080, "test fdf");
-	e.img = mlx_new_image(e.mlx, 1920, 1080);
+	e.win = mlx_new_window(e.mlx, WIDTH, HEIGHT, "test fdf");
+	e.img = mlx_new_image(e.mlx, WIDTH, HEIGHT);
+/*	while (p2.x < 750)
+	{
+			ft_drawline_img_c(e.img, p1, p2, c);
+		p2.x++;
+	}
+
+	p1.x = 500;
+	p1.y = 500;
+	p2.x = 750;
+	p2.y = 250;
+
+	while (p2.y <750)
+	{
+		ft_drawline_img_c(e.img, p1, p2, c);
+		p2.y++;
+	}
+
+	while (p2.x > 250)
+	{
+		ft_drawline_img_c(e.img, p1, p2, c);
+		p2.x--;
+	}
+	while (p2.y > 250)
+	{
+		ft_drawline_img_c(e.img, p1, p2, c);
+		p2.y--;
+	}*/
 	draw_grid(e, tab_cav, RED);
 	mlx_put_image_to_window(e.mlx, e.win, e.img, 0, 0);
 	mlx_key_hook(e.win, key_hook, &e);
