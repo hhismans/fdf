@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/23 13:29:38 by hhismans          #+#    #+#             */
-/*   Updated: 2014/11/28 08:38:04 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/11/28 11:08:50 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ static void	case_horiz(void *img_ptr, t_point p1, t_point p2, t_color c)
 	int e_corect;
 	int i_color;
 
-	i_color = (c.color_end - c.color_begin) / (p2.x - p1.x);
+	i_color = 0;
+	if (p2.x - p1.x)
+		i_color = (c.color_end - c.color_begin) / (p2.x - p1.x);
 	dy = p2.y - p1.y;
 	dx = p2.x - p1.x;
 	yi = p1.y;
@@ -60,7 +62,9 @@ static void	case_horizneg(void *img_ptr, t_point p1, t_point p2, t_color c)
 	int e_corect;
 	int i_color;
 
-	i_color = (c.color_end - c.color_begin) / (p2.x - p1.x);
+	i_color = 0;
+	if (p2.x - p1.x)
+		i_color = (c.color_end - c.color_begin) / (p2.x - p1.x);
 	dy = p1.y - p2.y;
 	dx = p2.x - p1.x;
 	yi = p1.y;
@@ -93,7 +97,9 @@ static void	case_verti(void *img_ptr, t_point p1, t_point p2, t_color c)
 	int e_corect;
 	int i_color;
 
-	i_color = (c.color_end - c.color_begin) / (p2.y - p1.y);
+	i_color = 0;
+	if (p2.y - p1.y)
+		i_color = (c.color_end - c.color_begin) / (p2.y - p1.y);
 	dy = p2.y - p1.y;
 	dx = p2.x - p1.x;
 	yi = p1.y;
@@ -126,7 +132,9 @@ static void	case_vertineg(void *img_ptr, t_point p1, t_point p2, t_color c)
 	int e_corect;
 	int i_color;
 
-	i_color = (c.color_end - c.color_begin) / (p1.y - p2.y);
+	i_color = 0;
+	if (p1.y - p2.y)
+		i_color = (c.color_end - c.color_begin) / (p1.y - p2.y);
 	dy = p2.y - p1.y;
 	dx = p2.x - p1.x;
 	yi = p1.y;
@@ -216,7 +224,9 @@ void	ft_drawline_img_c(void *img_ptr, t_point p1, t_point p2, t_color c)
 	{
 		if (p1.y < p2.y)
 		{
-			i_color = (c.color_end - c.color_begin) / (p2.y - p1.y);
+			i_color = 0;
+			if (p2.y - p1.y)
+				i_color = (c.color_end - c.color_begin) / (p2.y - p1.y);
 			while (p1.y != p2.y)
 			{
 				mlx_pixel_put_img(img_ptr, p1.x, p1.y, c.color_begin);
@@ -226,7 +236,9 @@ void	ft_drawline_img_c(void *img_ptr, t_point p1, t_point p2, t_color c)
 		}
 		else
 		{
-			i_color = (c.color_end - c.color_begin) / (p2.y - p1.y);
+			i_color = 0;
+			if (p2.x - p1.x)
+				i_color = (c.color_end - c.color_begin) / (p2.x - p1.x);
 			while (p1.y != p2.y)
 			{
 				mlx_pixel_put_img(img_ptr, p1.x, p2.y, c.color_begin);
