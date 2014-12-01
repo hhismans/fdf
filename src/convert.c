@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/01 17:32:22 by hhismans          #+#    #+#             */
-/*   Updated: 2014/12/01 18:17:53 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/12/01 23:11:38 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void			conv_axono(t_env e, t_point *point, int i, int j)
 {
 	double omega;
 	double alpha;
+	int i2;
+	int j2;	
 
 	omega = e.omega * M_PI / 180;
 	alpha = e.alpha * M_PI / 180;
@@ -42,8 +44,8 @@ void			conv_cavaliere(t_env e, t_point *point, int i, int j)
 
 	omega = e.omega * M_PI / 180;
 	alpha = e.alpha * M_PI / 180;
-	point->x = (10 * (j - 1)) + (35 * e.tab_int[i][j]);
-	point->y = (10 * i) + (35 * e.tab_int[i][j]);
+	point->x = (20 * (j - 1)) + (cos(alpha) * 20 * e.tab_int[i][j]);
+	point->y = (20 * i) + (sin(alpha) * 20 * e.tab_int[i][j]);
 }
 
 t_point			**convert_map(t_env e, void (*conv)(t_env, t_point *, int, int))

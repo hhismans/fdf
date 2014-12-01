@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/24 11:58:03 by hhismans          #+#    #+#             */
-/*   Updated: 2014/12/01 18:37:59 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/12/01 21:35:28 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int		fill_list(char *file, t_list **lst_line)
 	return (nbr_line);
 }
 
-int				**getinfo(char *file)
+int				**getinfo(t_env *e, char *file)
 {
 	char	**tab_char;
 	int		nbr_line;
@@ -75,6 +75,7 @@ int				**getinfo(char *file)
 	i = 0;
 	nbr_line = fill_list(file, &lst_line);
 	tab_int = (int **)ft_taballoc(sizeof(int) * (nbr_line));
+	e->nbr_line = nbr_line;
 	while (lst_line)
 	{
 		tab_char = ft_strsplit((char *)lst_line->content, ' ');

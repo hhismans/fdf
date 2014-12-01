@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/22 19:07:06 by hhismans          #+#    #+#             */
-/*   Updated: 2014/12/01 20:55:41 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/12/01 23:06:00 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@
 #define OPAR_KEY	57
 #define CPAR_KEY	48
 #define ONE_KEY		65457
-#define NINE_KEY		65465
+#define NINE_KEY	65465
+#define KEY_R		114
+#define CAVALIERE	0
+#define AXONO		1
+#define KEY_EXCLA	49
+#define KEY_AROBASE 50
 typedef struct		s_point
 {
 	int		x;
@@ -56,12 +61,14 @@ typedef struct		s_env
 	void		*img;
 	void		*img2;
 	int			**tab_int;
+	int			nbr_line;
 	int			omega;
 	int			alpha;
 	int			zoom;
 	t_point		decal;
 	int			gamme;
 	int			mult_z;
+	int			perspec;
 }					t_env;
 
 void	ft_drawline(t_env env, t_point p1, t_point p2, int color);
@@ -74,7 +81,7 @@ void	case_horiz(void *img_ptr, t_point p1, t_point p2, t_color c);
 void	case_horizneg(void *img_ptr, t_point p1, t_point p2, t_color c);
 void	case_verti(void *img_ptr, t_point p1, t_point p2, t_color c);
 void	case_vertineg(void *img_ptr, t_point p1, t_point p2, t_color c);
-int		**getinfo(char *file);
+int		**getinfo(t_env *e, char *file);
 void	conv_axono(t_env e, t_point *point, int i, int j);
 void	conv_cavaliere(t_env e, t_point *point, int i, int j);
 t_point	**convert_map(t_env e, void (*conv)(t_env, t_point *,int, int));
