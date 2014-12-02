@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/01 17:43:11 by hhismans          #+#    #+#             */
-/*   Updated: 2014/12/01 17:45:07 by hhismans         ###   ########.fr       */
+/*   Updated: 2014/12/02 01:28:04 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -15,6 +15,26 @@
 #include "fdf.h"
 #include <math.h>
 #include <stdlib.h>
+
+
+void	map_rot(t_env *e)
+{
+	int i;
+	t_point	**tab_conv;
+	i = 0;
+	while (i < 360)
+	{
+		e->omega++;
+		e->alpha++;
+		tab_conv = convert_map(*e, conv_axono);
+		mlx_destroy_image((*e).mlx, (*e).img);
+		e->img = mlx_new_image((*e).mlx, WIDTH, HEIGHT);
+		draw_grid(*e, tab_conv, (*e).tab_int, e->gamme * e->mult_z / 5);
+		mlx_put_image_to_window((*e).mlx, (*e).win, e->img, 0, 0);
+		//free(tab_conv);
+		i++;
+	}
+}
 
 int		key_hook(int keycode, t_env *e)
 {
@@ -25,6 +45,10 @@ int		key_hook(int keycode, t_env *e)
 
 	t_point		**tab_conv;
 
+	if (keycode == KEY_EXCLA)
+		e->perspec = AXONO;
+	if (keycode == KEY_AROBASE)
+		e->perspec = CAVALIERE;
 	if (keycode == RIGHT)
 		e->omega -= increment;
 	if (keycode == LEFT)
@@ -67,6 +91,8 @@ int		key_hook(int keycode, t_env *e)
 		e->mult_z -= increment;
 	if (keycode >= ONE_KEY && keycode <= NINE_KEY)
 		increment = keycode - ONE_KEY + 1;
+	if	(keycode == KEY_R)
+		map_rot(e);
 	if (keycode == ESC_KEY)
 		exit(0);
 	ft_putstr("\nOMEGA = ");
@@ -86,7 +112,10 @@ int		key_hook(int keycode, t_env *e)
 //	e->omega = e->omega * M_PI / 180;
 //	e->alpha = e->alpha * M_PI / 180;
 
-	tab_conv = convert_map(*e, conv_axono);
+	if (e->perspec == AXONO)
+		tab_conv = convert_map(*e, conv_axono);
+	else if(e->perspec == CAVALIERE)
+		tab_conv = convert_map(*e, conv_cavaliere);
 	mlx_destroy_image((*e).mlx, (*e).img);
 	(*e).img = mlx_new_image((*e).mlx, WIDTH, HEIGHT);
 	draw_grid(*e, tab_conv, (*e).tab_int, e->gamme * e->mult_z / 5);
@@ -106,11 +135,11 @@ int		main(int argc, char **argv)
 	int j;
 	t_env e;
 	int **tab_axe;
-
+	void *img_42;
 	
 	j = 0;
 	i = 0;
-	e.tab_int = getinfo(argv[1]);
+	e.tab_int = getinfo(&e, argv[1]);
 
 	while (e.tab_int[j])
 	{
@@ -170,6 +199,10 @@ int		main(int argc, char **argv)
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, WIDTH, HEIGHT, "test fdf");
 	e.img = mlx_new_image(e.mlx, WIDTH, HEIGHT);
+	img_42 = mlx_new_image(e.mlx, 1000, 1000);
+	int hauteur = 92;
+	int largeur = 138;
+	mlx_xpm_file_to_image(e.mlx, argv[2], &largeur, &hauteur);
 /*	while (p2.x < 750)
 	{
 			ft_drawline_img_c(e.img, p1, p2, c);
@@ -204,9 +237,9 @@ int		main(int argc, char **argv)
 	e.decal.y = 360;
 	e.gamme = 43;
 	e.mult_z = 10;
-
+	e.perspec = CAVALIERE;
 	draw_grid(e, tab_cav, e.tab_int, 1);
-//	mlx_put_image_to_window(e.mlx, e.win, e.img, 0, 0);
+	mlx_put_image_to_window(e.mlx, e.win, img_42, 400, 400);
 //	mlx_hook_key_press(e.win, key_hoo
 	mlx_key_hook(e.win, key_hook, &e);
 	mlx_loop(e.mlx);
